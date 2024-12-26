@@ -20,5 +20,6 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ktor Client"
-include(":app")
- 
+include(":presentation")
+include(":data")
+include(":domain")
