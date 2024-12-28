@@ -1,4 +1,4 @@
-package com.abdat.ktorclient.ui.theme
+package com.abdat.Eshop.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -66,14 +66,14 @@ dependencies {
 
 
 
-    implementation(libs.ktor.client.okhttp) // ktor-engine
-    implementation(libs.ktor.client.core) // Ktor-Core
-
-
-    implementation(libs.kotlinx.serialization.json) // KotlinX Serialization (Convert JSON response to Kotlin Objects)
-    implementation(libs.ktor.serialization.kotlinx.json) // Ktor- To work with Serialization
-
-    implementation(libs.ktor.client.logging) // Logging (Optional)
-
-    implementation(libs.ktor.client.content.negotiation) // Serialization
+//    implementation(libs.ktor.client.okhttp) // ktor-engine
+//    implementation(libs.ktor.client.core) // Ktor-Core
+//
+//
+//    implementation(libs.kotlinx.serialization.json) // KotlinX Serialization (Convert JSON response to Kotlin Objects)
+//    implementation(libs.ktor.serialization.kotlinx.json) // Ktor- To work with Serialization
+//
+//    implementation(libs.ktor.client.logging) // Logging (Optional)
+//
+//    implementation(libs.ktor.client.content.negotiation) // Serialization
 }

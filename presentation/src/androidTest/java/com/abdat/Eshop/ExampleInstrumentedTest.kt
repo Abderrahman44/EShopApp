@@ -1,4 +1,4 @@
-package com.abdat.ktorclient
+package com.abdat.Eshop
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

@@ -1,4 +1,4 @@
-package com.abdat.ktorclient
+package com.abdat.Eshop
 
 import org.junit.Test
 

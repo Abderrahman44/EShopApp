@@ -1,5 +1,6 @@
 package com.abdat.domain.model
 
+
 data class Product(
     val id: Int,
     val title: String,
