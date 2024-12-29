@@ -20,17 +20,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.abdat.domain.model.Product
 import kotlinx.coroutines.flow.MutableStateFlow
+import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun HomeScreen(uiState: MutableStateFlow<List<Product>>) {
-    val products = uiState.collectAsState()
-    if (products.value.isEmpty())  {
-        CircularProgressIndicator()
-    }
-    LazyColumn {
-        items(products.value) { product ->
-            ProductItem(product = product)
+fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
+    val uiState = viewModel.uiState.collectAsState()
+
+    when (uiState.value) {
+        is HomeScreenUIEvents.Loading -> {
+            CircularProgressIndicator()
+        }
+
+        is HomeScreenUIEvents.Success -> {
+            val data = (uiState.value as HomeScreenUIEvents.Success).data
+            LazyColumn {
+
+                items(data) { product ->
+                    ProductItem(product = product)
+                }
+            }
+        }
+
+        is HomeScreenUIEvents.Error -> {
+            Text(text = (uiState.value as HomeScreenUIEvents.Error).message)
         }
     }
 }

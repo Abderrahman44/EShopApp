@@ -19,24 +19,24 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
 
-class NetworkServiceImpl() : NetworkService {
+class NetworkServiceImpl(private val client:HttpClient) : NetworkService {
     override suspend fun getProducts(): ResultWrapper<List<Product>> {
-        val client: HttpClient = HttpClient(OkHttp) {
-            defaultRequest { url("https://fakestoreapi.com/") }
-            install(Logging) {
-                logger = Logger.SIMPLE
-            }
-            install(HttpTimeout) {
-                requestTimeoutMillis = 15000 // Set a 10-second timeout
-                connectTimeoutMillis = 15000
-                socketTimeoutMillis = 15000
-            }
-            install(ContentNegotiation) {
-                json(Json {
-                    ignoreUnknownKeys = true
-                })
-            }
-        }
+//        val client: HttpClient = HttpClient(OkHttp) {
+//            defaultRequest { url("https://fakestoreapi.com/") }
+//            install(Logging) {
+//                logger = Logger.SIMPLE
+//            }
+//            install(HttpTimeout) {
+//                requestTimeoutMillis = 15000 // Set a 10-second timeout
+//                connectTimeoutMillis = 15000
+//                socketTimeoutMillis = 15000
+//            }
+//            install(ContentNegotiation) {
+//                json(Json {
+//                    ignoreUnknownKeys = true
+//                })
+//            }
+//        }
         return try {
             val productModel: List<ProductModule> = client.get("/products").body()
             var product = productModel.map { it.toProduct() }
@@ -52,7 +52,7 @@ class NetworkServiceImpl() : NetworkService {
 //show data
 fun main() = runBlocking {
     val networkService =
-        NetworkServiceImpl() // Assuming NetworkServiceImpl is your network service class
+        NetworkServiceImpl(HttpClient()) // Assuming NetworkServiceImpl is your network service class
     val requestResult = networkService.getProducts()
 
    when (requestResult) {

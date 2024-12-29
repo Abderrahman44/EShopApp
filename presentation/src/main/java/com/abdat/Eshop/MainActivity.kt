@@ -17,35 +17,35 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class MainActivity : ComponentActivity() {
-    private val ktorClient = NetworkServiceImpl()
+//    private val ktorClient = NetworkServiceImpl()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // A surface container using the 'background' color from the theme
-            val post = remember {
-                MutableStateFlow<List<Product>>(emptyList())
-            }
-            val uiState = remember {
-                MutableStateFlow<HomeScreenUIEvents>(HomeScreenUIEvents.Loading)
-            }
-            LaunchedEffect(key1 = Unit, block = {
-                val result = ktorClient.getProducts()
-                when (result) {
-                    is ResultWrapper.Success -> {
-                        post.value = result.value
-                        uiState.value = HomeScreenUIEvents.Success(post.value)
-                    }
-
-                    is ResultWrapper.Error -> {
-                        val error = (result).message
-                        uiState.value = HomeScreenUIEvents.Error(error.toString())
-                    }
-
-                }
-
-            })
+//            // A surface container using the 'background' color from the theme
+//            val post = remember {
+//                MutableStateFlow<List<Product>>(emptyList())
+//            }
+//            val uiState = remember {
+//                MutableStateFlow<HomeScreenUIEvents>(HomeScreenUIEvents.Loading)
+//            }
+//            LaunchedEffect(key1 = Unit, block = {
+//                val result = ktorClient.getProducts()
+//                when (result) {
+//                    is ResultWrapper.Success -> {
+//                        post.value = result.value
+//                        uiState.value = HomeScreenUIEvents.Success(post.value)
+//                    }
+//
+//                    is ResultWrapper.Error -> {
+//                        val error = (result).message
+//                        uiState.value = HomeScreenUIEvents.Error(error.toString())
+//                    }
+//
+//                }
+//
+//            })
             KtorClientTheme {
-                HomeScreen(post)
+                HomeScreen()
             }
         }
     }
