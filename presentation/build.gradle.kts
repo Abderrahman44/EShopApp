@@ -2,8 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.kotlin.serialization)
-    //id("org.jetbrains.kotlin.plugin.serialization")
+    //alias(libs.plugins.kotlin.serialization)
 
 
 
@@ -61,6 +60,9 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.android.compose)
     implementation(libs.compose.navigation)
+    //implementation(libs.coil.compose)
+    implementation(libs.coil.kt.coil.compose)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -70,16 +72,4 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
-
-//    implementation(libs.ktor.client.okhttp) // ktor-engine
-//    implementation(libs.ktor.client.core) // Ktor-Core
-//
-//
-//    implementation(libs.kotlinx.serialization.json) // KotlinX Serialization (Convert JSON response to Kotlin Objects)
-//    implementation(libs.ktor.serialization.kotlinx.json) // Ktor- To work with Serialization
-//
-//    implementation(libs.ktor.client.logging) // Logging (Optional)
-//
-//    implementation(libs.ktor.client.content.negotiation) // Serialization
 }

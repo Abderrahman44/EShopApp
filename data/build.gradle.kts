@@ -45,7 +45,7 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json) // Ktor- To work with Serialization
     implementation(libs.ktor.client.logging) // Logging (Optional)
     implementation(libs.ktor.client.content.negotiation) // Serialization
-    //implementation(libs.slf4j.simple)
+    implementation(libs.slf4j.simple)
     //koin
 //    testImplementation(libs.junit)
 //    androidTestImplementation(libs.androidx.junit)

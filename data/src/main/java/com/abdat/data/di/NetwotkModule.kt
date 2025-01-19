@@ -1,5 +1,6 @@
 package com.abdat.data.di
 
+import com.abdat.data.dto.HttpRoutes
 import com.abdat.data.remote.NetworkServiceImpl
 import com.abdat.domain.remote.NetworkService
 import com.abdat.domain.remote.ResultWrapper
@@ -19,7 +20,7 @@ import org.koin.dsl.module
 val networkModule = module {
     single {
          HttpClient(OkHttp) {
-            defaultRequest { url("https://fakestoreapi.com/") }
+            defaultRequest { url(HttpRoutes.BASE_URL) }
             install(Logging) {
                 logger = Logger.SIMPLE
             }
@@ -64,7 +65,7 @@ val client: HttpClient = HttpClient(OkHttp) {
 fun main() = runBlocking {
     val networkService =
         NetworkServiceImpl(client) // Assuming NetworkServiceImpl is your network service class
-    val requestResult = networkService.getProducts()
+    val requestResult = networkService.getProducts(HttpRoutes.GET_ELECTRONIC_PRODUCTS)
 
     when (requestResult) {
         is ResultWrapper.Success -> {
@@ -73,6 +74,8 @@ fun main() = runBlocking {
                 println("Title: ${product.title}")
                 println("Description: ${product.description}")
                 println("Price: $${product.price}")
+                println("Category: ${product.category}")
+                println("Image URL: ${product.image}")
                 println("--------------------")
             }
         }
