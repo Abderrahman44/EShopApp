@@ -7,16 +7,16 @@ import kotlinx.serialization.Serializable
 data class ProductModule(
     val id: Int,
     val title: String,
-    val price: Double,
     val description: String,
-    val category: String,
+    val price: Double,
     val image: String,
+    val categoryId: Int,
 ) {
     fun toProduct() = Product(
         id = id,
         title = title,
         price = price,
-        category = category,
+        categoryId = categoryId,
         description = description,
         image = image
     )

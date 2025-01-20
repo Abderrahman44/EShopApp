@@ -13,6 +13,7 @@ import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.plugins.logging.SIMPLE
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
@@ -34,6 +35,8 @@ val networkModule = module {
                     prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
+                    coerceInputValues = true
+
                 })
             }
         }
@@ -66,15 +69,18 @@ fun main() = runBlocking {
     val networkService =
         NetworkServiceImpl(client) // Assuming NetworkServiceImpl is your network service class
     //val requestResult = networkService.getProducts(HttpRoutes.GET_ELECTRONIC_PRODUCTS)
-    val requestCategoryResult = networkService.getCategories()
-
+    val requestCategoryResult = networkService.getProducts(2)
     when(requestCategoryResult){
         is ResultWrapper.Error -> {}
         is ResultWrapper.Success ->{
-            val categories = requestCategoryResult.value
-            categories.forEach { category ->
-                println(category)
+            val categories = requestCategoryResult.value.products
+            categories.forEach { product ->
+                println("Product: ${product.title}")
+                println("Price: $${product.price}")
+                println("Description: ${product.description}")
+                println("--------------")
             }
+
         }
     }
 
