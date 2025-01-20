@@ -1,8 +1,9 @@
-package com.abdat.Eshop.ui.feature.home
+package com.abdat.eshop.ui.feature.home
 
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,14 +48,27 @@ import coil.compose.SubcomposeAsyncImage
 
 import com.abdat.domain.model.Product
 import com.abdat.ktorclient.R.drawable
-import com.abdat.ktorclient.R
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
-
+    val loading = remember {
+        mutableStateOf(false)
+    }
+    val error = remember {
+        mutableStateOf<String?>(null)
+    }
+    val featured = remember {
+        mutableStateOf<List<Product>>(emptyList())
+    }
+    val popularProducts = remember {
+        mutableStateOf<List<Product>>(emptyList())
+    }
+    val categories = remember {
+        mutableStateOf<List<String>>(emptyList())
+    }
     Scaffold {
         Surface(
             modifier = Modifier
@@ -61,24 +77,46 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
         ) {
             when (uiState.value) {
                 is HomeScreenUIEvents.Loading -> {
-                    CircularProgressIndicator(modifier = Modifier.size(180.dp))
+                    loading.value = true
+                    error.value = null
                 }
 
                 is HomeScreenUIEvents.Success -> {
                     val data = (uiState.value as HomeScreenUIEvents.Success)
-                    HomeContent(data.featured, data.popularProducts, data.categories)
+                    loading.value = false
+                    error.value = null
+                    featured.value = data.featured
+                    popularProducts.value = data.popularProducts
+                    categories.value = data.categories
                 }
 
                 is HomeScreenUIEvents.Error -> {
-                    Text(text = (uiState.value as HomeScreenUIEvents.Error).message)
+                    val errorMsg = (uiState.value as HomeScreenUIEvents.Error).message
+                    loading.value = false
+                    error.value = errorMsg
                 }
             }
+            HomeContent(
+                featured.value,
+                popularProducts.value,
+                categories.value,
+                loading.value,
+                error.value
+            )
+
         }
     }
 }
 
 @Composable
-fun HomeContent(featured: List<Product>, popularProducts: List<Product>, categories: List<String>) {
+fun HomeContent(
+    featured: List<Product>,
+    popularProducts: List<Product>,
+    categories: List<String>,
+    loadingState: Boolean = false,
+    errorState: String? = null,
+
+    ) {
     LazyColumn {
 
         item {
@@ -88,6 +126,19 @@ fun HomeContent(featured: List<Product>, popularProducts: List<Product>, categor
             Spacer(modifier = Modifier.size(8.dp))
         }
         item {
+            if (loadingState) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator(modifier = Modifier.size(68.dp))
+                    Text(text = "loading...", style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+            errorState?.let {
+                Text(text = it, style = MaterialTheme.typography.bodyMedium)
+            }
             if (categories.isNotEmpty()) {
                 Spacer(Modifier.padding(16.dp))
                 LazyRow {
@@ -132,7 +183,7 @@ fun ProfileHeader() {
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
             Image(
-                painter = painterResource(id = drawable.profile),
+                painter = painterResource(id = drawable.photo_profile),
                 contentDescription = null,
                 modifier = Modifier.size(48.dp)
             )
@@ -149,7 +200,7 @@ fun ProfileHeader() {
             }
         }
         Image(
-            painter = painterResource(id = R.drawable.notification),
+            painter = painterResource(id = drawable.notification),
             contentDescription = null,
             modifier = Modifier
                 .size(48.dp)
@@ -271,19 +322,3 @@ fun ProductItem(product: Product) {
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewItem() {
-    ProductItem(
-        Product(
-            1,
-            "Mens Cotton Jacket",
-            53.99,
-            "great outerwear jackets for Spring/Autumn/Winter, " +
-                    "suitable for many occasions, such as working,",
-            category = "men's clothing",
-            image = R.drawable.kermit.toString()
-        )
-    )
-}

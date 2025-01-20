@@ -1,4 +1,4 @@
-package com.abdat.Eshop.ui.feature.home
+package com.abdat.eshop.ui.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.abdat.Eshop
+package com.abdat.eshop
 
 import org.junit.Test
 

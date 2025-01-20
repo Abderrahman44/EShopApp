@@ -1,4 +1,4 @@
-package com.abdat.Eshop.ui.theme
+package com.abdat.eshop.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
