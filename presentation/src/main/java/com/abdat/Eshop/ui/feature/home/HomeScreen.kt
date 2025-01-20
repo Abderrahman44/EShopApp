@@ -61,12 +61,12 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
         ) {
             when (uiState.value) {
                 is HomeScreenUIEvents.Loading -> {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(modifier = Modifier.size(180.dp))
                 }
 
                 is HomeScreenUIEvents.Success -> {
                     val data = (uiState.value as HomeScreenUIEvents.Success)
-                    HomeContent(data.featured, data.popularProducts)
+                    HomeContent(data.featured, data.popularProducts, data.categories)
                 }
 
                 is HomeScreenUIEvents.Error -> {
@@ -78,7 +78,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
 }
 
 @Composable
-fun HomeContent(featured: List<Product>, popularProducts: List<Product>) {
+fun HomeContent(featured: List<Product>, popularProducts: List<Product>, categories: List<String>) {
     LazyColumn {
 
         item {
@@ -86,6 +86,27 @@ fun HomeContent(featured: List<Product>, popularProducts: List<Product>) {
             Spacer(modifier = Modifier.size(8.dp))
             SearchBar(value = "", onTextChanged = {})
             Spacer(modifier = Modifier.size(8.dp))
+        }
+        item {
+            if (categories.isNotEmpty()) {
+                Spacer(Modifier.padding(16.dp))
+                LazyRow {
+                    items(categories) {
+                        Text(
+                            text = it.apply { replaceFirstChar { it.uppercase() } },
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .padding(horizontal = 8.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(MaterialTheme.colorScheme.primary)
+                                .padding(8.dp),
+
+                            )
+                    }
+                }
+                Spacer(Modifier.padding(16.dp))
+            }
         }
         item {
             if (featured.isNotEmpty()) {
@@ -222,7 +243,8 @@ fun ProductItem(product: Product) {
                 model = product.image,
                 contentDescription = product.title,
                 modifier = Modifier
-                    .fillMaxWidth().height(96.dp),
+                    .fillMaxWidth()
+                    .height(96.dp),
                 loading = {
                     CircularProgressIndicator()
                 }

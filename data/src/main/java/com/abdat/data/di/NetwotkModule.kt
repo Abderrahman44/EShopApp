@@ -45,7 +45,7 @@ val networkModule = module {
 
 
 val client: HttpClient = HttpClient(OkHttp) {
-    defaultRequest { url("https://fakestoreapi.com/") }
+    defaultRequest { url(HttpRoutes.BASE_URL) }
     install(Logging) {
         logger = Logger.SIMPLE
     }
@@ -65,9 +65,20 @@ val client: HttpClient = HttpClient(OkHttp) {
 fun main() = runBlocking {
     val networkService =
         NetworkServiceImpl(client) // Assuming NetworkServiceImpl is your network service class
-    val requestResult = networkService.getProducts(HttpRoutes.GET_ELECTRONIC_PRODUCTS)
+    //val requestResult = networkService.getProducts(HttpRoutes.GET_ELECTRONIC_PRODUCTS)
+    val requestCategoryResult = networkService.getCategories()
 
-    when (requestResult) {
+    when(requestCategoryResult){
+        is ResultWrapper.Error -> {}
+        is ResultWrapper.Success ->{
+            val categories = requestCategoryResult.value
+            categories.forEach { category ->
+                println(category)
+            }
+        }
+    }
+
+ /*   when (requestResult) {
         is ResultWrapper.Success -> {
             val products = requestResult.value
             products.forEach { product ->
@@ -82,6 +93,6 @@ fun main() = runBlocking {
         else -> {
             println("Error: $requestResult")
         }
-    }
+    }*/
 }
 
