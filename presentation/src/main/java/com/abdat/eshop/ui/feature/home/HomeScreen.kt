@@ -3,6 +3,7 @@ package com.abdat.eshop.ui.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -42,16 +43,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.SubcomposeAsyncImage
 
 
 import com.abdat.domain.model.Product
+import com.abdat.eshop.model.UiProductModel
+import com.abdat.eshop.navigation.ProductDetailScreen
 import com.abdat.ktorclient.R.drawable
 import org.koin.androidx.compose.koinViewModel
 
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinViewModel()) {
     val uiState = viewModel.uiState.collectAsState()
     val loading = remember {
         mutableStateOf(false)
@@ -100,7 +104,11 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
                 popularProducts.value,
                 categories.value,
                 loading.value,
-                error.value
+                error.value,
+                onClick = {
+                    navController.navigate(ProductDetailScreen(UiProductModel.fromProduct(it)))
+
+                }
             )
 
         }
@@ -114,6 +122,8 @@ fun HomeContent(
     categories: List<String>,
     loadingState: Boolean = false,
     errorState: String? = null,
+    onClick: (Product) -> Unit,
+
 
     ) {
     LazyColumn {
@@ -160,11 +170,11 @@ fun HomeContent(
         }
         item {
             if (featured.isNotEmpty()) {
-                HomeProductRow(products = featured, title = "Featured")
+                HomeProductRow(products = featured, title = "Featured", onClick = onClick)
                 Spacer(modifier = Modifier.size(16.dp))
             }
             if (popularProducts.isNotEmpty()) {
-                HomeProductRow(products = popularProducts, title = "Popular Products")
+                HomeProductRow(products = popularProducts, title = "Popular Products", onClick)
             }
         }
     }
@@ -246,7 +256,7 @@ fun SearchBar(value: String, onTextChanged: (String) -> Unit) {
 }
 
 @Composable
-fun HomeProductRow(products: List<Product>, title: String) {
+fun HomeProductRow(products: List<Product>, title: String, onClick: (Product) -> Unit) {
     Column {
         Box(
             modifier = Modifier
@@ -273,18 +283,19 @@ fun HomeProductRow(products: List<Product>, title: String) {
         Spacer(modifier = Modifier.size(8.dp))
         LazyRow {
             items(products) { product ->
-                ProductItem(product = product)
+                ProductItem(product = product, onClick = onClick)
             }
         }
     }
 }
 
 @Composable
-fun ProductItem(product: Product) {
+fun ProductItem(product: Product, onClick: (Product) -> Unit) {
     Card(
         modifier = Modifier
             .padding(horizontal = 8.dp, vertical = 9.dp)
-            .size(width = 126.dp, height = 143.dp),
+            .size(width = 126.dp, height = 143.dp)
+            .clickable { onClick(product) },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.LightGray.copy(alpha = 0.3f))
     ) {

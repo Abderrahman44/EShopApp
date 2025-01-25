@@ -2,9 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    //alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.kotlin.serialization)
 
-
+    id("kotlin-parcelize")
 
 }
 
@@ -60,9 +60,11 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.android.compose)
     implementation(libs.compose.navigation)
+    //coil V3
     //implementation(libs.coil.compose)
+    //coil V2
     implementation(libs.coil.kt.coil.compose)
-
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

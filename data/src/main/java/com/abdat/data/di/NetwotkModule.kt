@@ -20,13 +20,13 @@ import org.koin.dsl.module
 
 val networkModule = module {
     single {
-         HttpClient(OkHttp) {
+        HttpClient(OkHttp) {
             defaultRequest { url(HttpRoutes.BASE_URL) }
             install(Logging) {
                 logger = Logger.SIMPLE
             }
             install(HttpTimeout) {
-                requestTimeoutMillis = 15000 // Set a 10-second timeout
+                requestTimeoutMillis = 10000 // Set a 10-second timeout
                 connectTimeoutMillis = 15000
                 socketTimeoutMillis = 15000
             }
@@ -35,7 +35,8 @@ val networkModule = module {
                     prettyPrint = true
                     isLenient = true
                     ignoreUnknownKeys = true
-                    coerceInputValues = true
+
+                    //coerceInputValues = true
 
                 })
             }
@@ -53,7 +54,7 @@ val client: HttpClient = HttpClient(OkHttp) {
         logger = Logger.SIMPLE
     }
     install(HttpTimeout) {
-        requestTimeoutMillis = 15000 // Set a 10-second timeout
+        requestTimeoutMillis = 10000
         connectTimeoutMillis = 15000
         socketTimeoutMillis = 15000
     }
@@ -70,9 +71,9 @@ fun main() = runBlocking {
         NetworkServiceImpl(client) // Assuming NetworkServiceImpl is your network service class
     //val requestResult = networkService.getProducts(HttpRoutes.GET_ELECTRONIC_PRODUCTS)
     val requestCategoryResult = networkService.getProducts(2)
-    when(requestCategoryResult){
+    when (requestCategoryResult) {
         is ResultWrapper.Error -> {}
-        is ResultWrapper.Success ->{
+        is ResultWrapper.Success -> {
             val categories = requestCategoryResult.value.products
             categories.forEach { product ->
                 println("Product: ${product.title}")
@@ -84,21 +85,22 @@ fun main() = runBlocking {
         }
     }
 
- /*   when (requestResult) {
-        is ResultWrapper.Success -> {
-            val products = requestResult.value
-            products.forEach { product ->
-                println("Title: ${product.title}")
-                println("Description: ${product.description}")
-                println("Price: $${product.price}")
-                println("Category: ${product.category}")
-                println("Image URL: ${product.image}")
-                println("--------------------")
-            }
-        }
-        else -> {
-            println("Error: $requestResult")
-        }
-    }*/
+    /*   when (requestResult)
+     {
+           is ResultWrapper.Success -> {
+               val products = requestResult.value
+               products.forEach { product ->
+                   println("Title: ${product.title}")
+                   println("Description: ${product.description}")
+                   println("Price: $${product.price}")
+                   println("Category: ${product.category}")
+                   println("Image URL: ${product.image}")
+                   println("--------------------")
+               }
+           }
+           else -> {
+               println("Error: $requestResult")
+           }
+       }*/
 }
 
