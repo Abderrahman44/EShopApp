@@ -32,8 +32,8 @@ import com.abdat.eshop.navigation.CustomNavType
 import com.abdat.eshop.navigation.HomeScreen
 import com.abdat.eshop.navigation.ProductDetailScreen
 import com.abdat.eshop.navigation.ProfileScreen
-import com.abdat.eshop.navigation.productNavType
 import com.abdat.eshop.ui.feature.home.HomeScreen
+import com.abdat.eshop.ui.feature.product_details.ProductDetailsScreen
 import com.abdat.eshop.ui.theme.KtorClientTheme
 import com.abdat.ktorclient.R
 import kotlin.reflect.typeOf
@@ -56,7 +56,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         NavHost(navController = navController, startDestination = HomeScreen) {
                             composable<HomeScreen> {
-                                HomeScreen(navController )
+                                HomeScreen(navController)
                             }
                             composable<CartScreen> {
                                 Text("Cart")
@@ -68,9 +68,10 @@ class MainActivity : ComponentActivity() {
                                 typeMap = mapOf(typeOf<UiProductModel>() to CustomNavType.ProductType)
                             ) {
                                 val productRoute = it.toRoute<ProductDetailScreen>()
-                                Box(modifier = Modifier.fillMaxSize()) {
-                                    Text(text = productRoute.product.title)
-                                }
+                                ProductDetailsScreen(
+                                    navController = navController,
+                                    product = productRoute.product
+                                )
                             }
                         }
 

@@ -106,7 +106,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = koinView
                 loading.value,
                 error.value,
                 onClick = {
-                    navController.navigate(ProductDetailScreen(UiProductModel.fromProduct(it)))
+                     navController.navigate(ProductDetailScreen(UiProductModel.fromProduct(it)))
 
                 }
             )
