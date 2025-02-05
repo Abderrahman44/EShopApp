@@ -3,6 +3,8 @@ package com.abdat.eshop.ui.feature.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.abdat.data.dto.HttpRoutes
+import com.abdat.domain.model.CategoriesListModel
+import com.abdat.domain.model.Category
 import com.abdat.domain.model.Product
 import com.abdat.domain.remote.ResultWrapper
 import com.abdat.domain.usecase.GetCategoryUseCase
@@ -37,11 +39,16 @@ class HomeViewModel(
             _uiState.value = HomeScreenUIEvents.Success(featured, popularProducts,categories )
         }
     }
-    private suspend fun getCategory() : List<String>{
+    private suspend fun getCategory(): List<String> {
         getCategoryUseCase().let { result ->
-            return when(result) {
-                is ResultWrapper.Success -> {result.value}
-                is ResultWrapper.Error -> {emptyList()}
+            return when (result) {
+                is ResultWrapper.Success -> {
+                    return (result).value.categories.map { it.title }
+                }
+
+                is ResultWrapper.Error -> {
+                    return emptyList()
+                }
             }
         }
     }

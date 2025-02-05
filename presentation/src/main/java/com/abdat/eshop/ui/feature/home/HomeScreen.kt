@@ -50,7 +50,7 @@ import coil.compose.SubcomposeAsyncImage
 import com.abdat.domain.model.Product
 import com.abdat.eshop.model.UiProductModel
 import com.abdat.eshop.navigation.ProductDetailScreen
-import com.abdat.ktorclient.R.drawable
+import com.abdat.EshopApp.R.drawable
 import org.koin.androidx.compose.koinViewModel
 
 

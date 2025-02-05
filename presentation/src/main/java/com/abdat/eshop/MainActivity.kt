@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -24,7 +23,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.toRoute
 import com.abdat.eshop.model.UiProductModel
 import com.abdat.eshop.navigation.CartScreen
@@ -34,8 +32,8 @@ import com.abdat.eshop.navigation.ProductDetailScreen
 import com.abdat.eshop.navigation.ProfileScreen
 import com.abdat.eshop.ui.feature.home.HomeScreen
 import com.abdat.eshop.ui.feature.product_details.ProductDetailsScreen
-import com.abdat.eshop.ui.theme.KtorClientTheme
-import com.abdat.ktorclient.R
+import com.abdat.eshop.ui.theme.EshopAppTheme
+import com.abdat.EshopApp.R
 import kotlin.reflect.typeOf
 
 
@@ -44,7 +42,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            KtorClientTheme {
+            EshopAppTheme {
                 val navController = rememberNavController()
                 Scaffold(modifier = Modifier.fillMaxSize(),
                     bottomBar = { BottomNavigationBar(navController) }
@@ -70,7 +68,8 @@ class MainActivity : ComponentActivity() {
                                 val productRoute = it.toRoute<ProductDetailScreen>()
                                 ProductDetailsScreen(
                                     navController = navController,
-                                    product = productRoute.product
+                                    product = productRoute.product,
+
                                 )
                             }
                         }

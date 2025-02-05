@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.abdat.ktorclient"
+    namespace = "com.abdat.EshopApp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.abdat.ktorclient"
+        applicationId = "com.abdat.EshopApp"
         minSdk = 26
         //noinspection OldTargetApi
         targetSdk = 34
@@ -46,8 +46,8 @@ android {
 
 dependencies {
 
-    implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

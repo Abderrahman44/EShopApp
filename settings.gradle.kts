@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ktor Client"
+rootProject.name = "EshopApp"
 include(":presentation")
 include(":data")
 include(":domain")

@@ -5,7 +5,7 @@ object HttpRoutes {
     const val GET_PRODUCTS = "/products"
     const val GET_CATEGORIES = "/categories"
     const val GET_CATEGORY = "/products/category/"
-    const val GET_ALL_CARTS = "/carts/"
+    const val CART = "/cart"
     const val GET_ELECTRONIC_PRODUCTS = "/products/category/electronics"
     const val GET_JEWELERY_PRODUCTS = "/products/category/jewelery"
 

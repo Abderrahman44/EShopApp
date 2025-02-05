@@ -5,7 +5,7 @@ import com.abdat.domain.remote.ResultWrapper
 import com.abdat.domain.repository.CategoryRepo
 
 class CategoryRepoImpl(val networkService: NetworkService): CategoryRepo {
-    override suspend fun getCategories(): ResultWrapper<List<String>> {
-        return networkService.getCategories()
-    }
+    override suspend fun getCategories()
+    = networkService.getCategories()
+
 }
