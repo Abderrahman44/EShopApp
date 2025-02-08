@@ -1,4 +1,4 @@
-# Roadside Assistance Client App
+# EShop App
 
 This is the Android client application for the Roadside Assistance platform. It allows users to
 request assistance, track service provider location, communicate with providers, and manage their
@@ -48,6 +48,6 @@ checking out.
 ## Contact
 
 For any inquiries or feedback,
-please contact Abderrahman44 at abderahmanabdat@gmail.com.
+please contact me at abderahmanabdat@gmail.com.
 
 <h4> Thank you for using EshopApp! Happy shopping! </h4>  
