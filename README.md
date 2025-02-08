@@ -48,6 +48,6 @@ checking out.
 ## Contact
 
 For any inquiries or feedback,
-please contact Abderrahman44 at abderahmanabdat@gmail.com.
+please contact me at abderahmanabdat@gmail.com.
 
 <h4> Thank you for using EshopApp! Happy shopping! </h4>  
